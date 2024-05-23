@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1B1D1F;
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-style: normal;
+  --text-white: #D2D5DA;
+}
+
+.checkbox{
+  background-color: black;
+  color: black;
+}
+
+.region:checked .label {
+  background-color: #2C7BE5;
+  color: #000;
+}
