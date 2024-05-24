@@ -1,5 +1,6 @@
 import useAPI from "../hooks/useAPI";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/header";
 import serch from "../assets/Search.svg";
 import dropdown from "../assets/Expand_down.svg";
@@ -8,6 +9,7 @@ import { useState } from "react";
 
 const Main = () => {
   const { countries, loading, setFilters, filters } = useAPI();
+  const navigate = useNavigate();
   const [text, setText] = useState("");
   const [showDropwdown, setShowDropdown] = useState(false);
 
@@ -51,6 +53,7 @@ const Main = () => {
       name: "",
     }));
   };
+
   return (
     <>
       <Header />
@@ -64,7 +67,7 @@ const Main = () => {
             <input
               type="text"
               placeholder="Search..."
-              className="bg-transparent text-[#6C727F] placeholder:text-[#6C727F] placeholder:w-fit focus:outline-none w-20 text-[10px] md:w-96 text-left text-nowrap rounded-xl"
+              className="bg-transparent text-[#6C727F] placeholder:text-[#6C727F] placeholder:w-fit focus:outline-none w-20 text-[10px] md:text-base md:w-96 text-left text-nowrap rounded-xl"
               value={text}
               onChange={handleChangeText}
             />
@@ -253,18 +256,21 @@ const Main = () => {
                     <th className="pb-5 text-xs md:text-base">Flag</th>
                     <th className="pb-5 text-xs md:text-base pl-5">Name</th>
                     <th className="pb-5 text-xs md:text-base">Population</th>
-                    <th className="pb-5 text-xs md:text-base">
+                    <th className="pb-5 text-xs md:text-base text-nowrap flex flex-row gap-1 items-center">
                       Area <span className="hidden md:block">(Km2)</span>
                     </th>
                     <th className="pb-5 text-xs md:text-base">Region</th>
                   </tr>
                 </thead>
                 {countries.length > 0 ? (
-                  <tbody className="text-xs">
+                  <tbody>
                     {countries.map((country, index) => (
                       <tr
                         key={index}
-                        className="text-[#D2D5DA] hover:bg-[#282B30] transition-all"
+                        className="text-[#D2D5DA] hover:bg-[#282B30] transition-all cursor-pointer border-b border-[#282B30]"
+                        onClick={() =>
+                          navigate(`/country/${country.name.common}`)
+                        }
                       >
                         <td className="w-10 md:w-16 h-auto m-auto py-3 md:py-4">
                           <Link to={`country/${country.name.common}`}>
@@ -275,19 +281,21 @@ const Main = () => {
                             />
                           </Link>
                         </td>
-                        <td className="pl-5 text-pretty text-[10px]">
+                        <td className="pl-5 text-pretty text-[10px] md:text-lg">
                           {country.name.common}
                         </td>
-                        <td className="text-[9px]">
+                        <td className="text-[9px] md:text-lg">
                           {country.population.toLocaleString("en-US")}
                         </td>
-                        <td className="text-[9px]">
+                        <td className="text-[9px] md:text-lg">
                           {country.area.toLocaleString("en-US", {
                             minimumFractionDigits: 0,
                             maximumFractionDigits: 2,
                           })}
                         </td>
-                        <td className="text-[10px]">{country.region}</td>
+                        <td className="text-[10px] md:text-lg">
+                          {country.region}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

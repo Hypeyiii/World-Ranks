@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
 import useAPI from "../hooks/useAPI";
 import Header from "../components/header";
+import { Link } from "react-router-dom";
 
 const Country = () => {
   const { name } = useParams();
@@ -20,6 +21,15 @@ const Country = () => {
     <>
       <Header />
       <section className="w-[90%] md:w-[55%] h-auto mx-auto px-2 md:px-10 rounded-xl bg-[#1B1D1F] border border-[#282B30] relative bottom-7 md:bottom-14">
+        <div className="flex flex-row gap-x-4 items-center absolute top-0 left-0 p-5">
+          <Link to={`/`} className="text-[#D2D5DA] text-xs md:text-lg opacity-50">
+            Home
+          </Link>
+          <span className="text-[#D2D5DA]">/</span>
+          <span className="text-[#D2D5DA] text-xs md:text-lg">
+            {name}
+          </span>
+        </div>
         <div className="relative w-[150px] md:w-[300px] md:h-[200px] mx-auto bottom-10 md:bottom-20">
           <img
             src={country.flags.svg}
@@ -41,7 +51,7 @@ const Country = () => {
             </p>
           </div>
           <div className="flex flex-row gap-2 py-2 px-2 md:py-2 md:px-6 bg-[#282B30] text-[#D2D5DA] rounded-xl">
-            <p className="px-2 py-2 border-r-2 border-[#1B1D1F] h-full text-xs md:text-base">
+            <p className="px-2 py-2 border-r-2 border-[#1B1D1F] h-full text-xs md:text-base flex flex-row gap-1 items-center">
               Area <span className="hidden md:block">(Km2)</span>
             </p>
             <p className="p-2 text-[10px] md:text-base">
@@ -99,11 +109,15 @@ const Country = () => {
           </div>
           <div className="flex flex-row justify-between items-center py-4 border-t border-[#282B30]">
             <p className="text-[#6C727F] text-xs md:text-lg">Continent</p>
-            <p className="text-[#D2D5DA] text-xs md:text-lg">{country.continents}</p>
+            <p className="text-[#D2D5DA] text-xs md:text-lg">
+              {country.continents}
+            </p>
           </div>
         </section>
         <div>
-          <p className="text-[#6C727F] text-xs md:text-lg mt-10">Neighbouring Countries</p>
+          <p className="text-[#6C727F] text-xs md:text-lg mt-10">
+            Neighbouring Countries
+          </p>
           <div className="grid grid-cols-4 md:grid-cols-7 gap-4 mt-4">
             {country.borders ? (
               country.borders.slice(0, 7).map((border, index) => {
