@@ -6,53 +6,21 @@ import serch from "../assets/Search.svg";
 import dropdown from "../assets/Expand_down.svg";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useState } from "react";
+import useFilters from "../hooks/useFilters";
 
 const Main = () => {
   const { countries, loading, setFilters, filters } = useAPI();
   const navigate = useNavigate();
-  const [text, setText] = useState("");
   const [showDropwdown, setShowDropdown] = useState(false);
 
-  const handleChangeMember = (e) => {
-    setFilters((prev) => ({
-      ...prev,
-      memberOfUN: e.target.checked,
-    }));
-  };
-
-  const handleChangeIndependent = (e) => {
-    setFilters((prev) => ({
-      ...prev,
-      independent: e.target.checked,
-    }));
-  };
-
-  const handleChangeText = (e) => {
-    const value = e.target.value.toLowerCase();
-    setText(value);
-    setFilters((prev) => ({
-      ...prev,
-      name: value,
-    }));
-  };
-
-  const handleChangeRegion = (e) => {
-    setFilters((prev) => ({
-      ...prev,
-      region: e.target.value,
-    }));
-  };
-
-  const cleanFilters = () => {
-    setText("");
-    setFilters((prev) => ({
-      ...prev,
-      region: "all",
-      memberOfUN: false,
-      independent: false,
-      name: "",
-    }));
-  };
+  const {
+    handleChangeMember,
+    handleChangeIndependent,
+    handleChangeText,
+    handleChangeRegion,
+    cleanFilters,
+    text,
+  } = useFilters();
 
   return (
     <>
@@ -112,6 +80,17 @@ const Main = () => {
                       }
                     >
                       Area
+                    </p>
+                    <p
+                      className="text-[#D2D5DA] hover:bg-[#6C727F] rounded-xl p-1 md:p-2 text-xs md:text-base cursor-pointer transition-all"
+                      onClick={() =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          order: "A-Z",
+                        }))
+                      }
+                    >
+                      A-Z
                     </p>
                   </div>
                 )}

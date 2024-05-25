@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Main from "./pages/main";
 import Country from "./pages/country";
+import { FiltersProvider } from "./context/filtersContext";
 
 function App() {
   const router = createBrowserRouter(
@@ -18,7 +19,9 @@ function App() {
   );
   return (
     <>
-      <RouterProvider router={router} />
+      <FiltersProvider>
+        <RouterProvider router={router} />
+      </FiltersProvider>
     </>
   );
 }

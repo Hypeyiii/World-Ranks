@@ -1,16 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { FiltersContext } from "../context/filtersContext";
 
 export default function useAPI() {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filters, setFilters] = useState({
-    memberOfUN: false,
-    independent: false,
-    name: "",
-    region: "all",
-    order: "Population",
-  });
+  const { filters, setFilters } = useContext(FiltersContext);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -28,8 +23,12 @@ export default function useAPI() {
         }
 
         if (filters.order === "Area") {
-          filteredCountries = filteredCountries.sort(
-            (a, b) => b.area - a.area
+          filteredCountries = filteredCountries.sort((a, b) => b.area - a.area);
+        }
+
+        if (filters.order === "A-Z") {
+          filteredCountries = filteredCountries.sort((a, b) =>
+            a.name.common.localeCompare(b.name.common)
           );
         }
 
